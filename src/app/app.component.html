@@ -1,10 +1,32 @@
-<div class="container">
+<div class="container" *ngIf="weatherData">
   <div class="upper-data">
-    <img src="../assets/hot-bg.jpeg" *ngIf="14 < 15" />
-    <img src="../assets/cold-bg.jpeg" *ngIf="14 > 15" />
+    <img
+      src="../assets/hot-bg.jpeg"
+      *ngIf="
+        (weatherData.forecast.items[0].temperature.max +
+          weatherData.forecast.items[0].temperature.min) /
+          2 >
+        30
+      "
+    />
+    <img
+      src="../assets/cold-bg.jpeg"
+      *ngIf="
+        (weatherData.forecast.items[0].temperature.max +
+          weatherData.forecast.items[0].temperature.min) /
+          2 <
+        30
+      "
+    />
     <div class="weather-data">
-      <div class="location">Bangkok</div>
-      <div class="temperature">{{ 32 | number : "1.0-0" }}°C</div>
+      <div class="location">{{ weatherData.location.name }}</div>
+      <div class="temperature">
+        {{
+          (weatherData.forecast.items[0].temperature.max +
+            weatherData.forecast.items[0].temperature.min) /
+            2 | number : "1.0-0"
+        }}°C
+      </div>
     </div>
   </div>
 
@@ -16,28 +38,36 @@
           <img src="../assets/cold-temp.png" alt="min-image" />
           <span>min</span>
         </div>
-        <div class="info-block-value">10°C</div>
+        <div class="info-block-value">
+          {{ weatherData.forecast.items[0].temperature.min }}°C
+        </div>
       </div>
       <div class="info-block">
         <div class="info-block-label">
           <img src="../assets/hot-temp.png" alt="max-image" />
           <span>max</span>
         </div>
-        <div class="info-block-value">20°C</div>
+        <div class="info-block-value">
+          {{ weatherData.forecast.items[0].temperature.max }}°C
+        </div>
       </div>
       <div class="info-block">
         <div class="info-block-label">
-          <img src="../assets/humidity.png" alt="humidity-image" />
-          <span>humidity</span>
+          <img src="../assets/wind-min.png" alt="wind-min-image" />
+          <span>wind min</span>
         </div>
-        <div class="info-block-value">77%</div>
+        <div class="info-block-value">
+          {{ weatherData.forecast.items[0].wind.min }} km/h
+        </div>
       </div>
       <div class="info-block">
         <div class="info-block-label">
-          <img src="../assets/wind.png" alt="wind-image" />
-          <span>wind</span>
+          <img src="../assets/wind-max.png" alt="wind-max-image" />
+          <span>wind max</span>
         </div>
-        <div class="info-block-value">11 km/h</div>
+        <div class="info-block-value">
+          {{ weatherData.forecast.items[0].wind.max }} km/h
+        </div>
       </div>
     </div>
   </div>
